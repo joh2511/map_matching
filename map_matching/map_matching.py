@@ -4,9 +4,9 @@ import itertools
 
 from geopy.distance import vincenty
 
-import shortest_path
-import viterbi_path
-import road_routing
+from map_matching import shortest_path
+from map_matching import viterbi_path
+from map_matching import road_routing
 
 try:
     from itertools import (

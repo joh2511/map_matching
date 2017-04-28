@@ -1,8 +1,8 @@
 import collections
 import itertools
 
-import shortest_path as sp
-from .utils import Edge
+from map_matching import shortest_path as sp
+from map_matching.utils import Edge
 
 try:
     from itertools import (
