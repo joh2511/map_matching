@@ -1,4 +1,5 @@
 __doc__ = '''
+
 usage: python2 map_matcher.py PSQL_URI ROAD_TABLE_NAME [SEARCH_RADIUS = 30] [MAX_ROUTE_DISTANCE = 2000] < sequence.txt
 
 The PSQL_URI looks like:
@@ -31,7 +32,7 @@ latitude.'''
 import sys
 import psycopg2
 
-import map_matching as mm
+from map_matching import map_matching as mm
 from map_matching.utils import Edge, Measurement
 
 
@@ -197,7 +198,7 @@ def parse_argv(argv):
         search_radius = 30 if search_radius is None else int(search_radius)
         max_route_distance = 2000 if max_route_distance is None else int(max_route_distance)
     except ValueError:
-        print >> sys.stderr, __doc__
+        print("ERROR: ",sys.stderr, __doc__)
         return
 
     return uri, road_table_name, search_radius, max_route_distance
@@ -217,13 +218,12 @@ def main(argv):
     conn.close()
 
     for candidate in candidates:
-        print '         Measurement ID: {0}'.format(candidate.measurement.id)
-        print '             Coordinate: {0:.6f} {1:.6f}'.format(*map(float, (candidate.measurement.lon, candidate.measurement.lat)))
-        print '    Matche d coordinate: {0:.6f} {1:.6f}'.format(*map(float, (candidate.lon, candidate.lat)))
-        print '        Matched edge ID: {0}'.format(candidate.edge.id)
-        print 'Location along the edge: {0:.2f}'.format(candidate.location)
-        print '               Distance: {0:.2f} meters'.format(candidate.distance)
-        print
+        print('         Measurement ID: {0}'.format(candidate.measurement.id))
+        print('             Coordinate: {0:.6f} {1:.6f}'.format(*map(float, (candidate.measurement.lon, candidate.measurement.lat))))
+        print('    Matche d coordinate: {0:.6f} {1:.6f}'.format(*map(float, (candidate.lon, candidate.lat))))
+        print('        Matched edge ID: {0}'.format(candidate.edge.id))
+        print('Location along the edge: {0:.2f}'.format(candidate.location))
+        print('               Distance: {0:.2f} meters'.format(candidate.distance))
 
     return 0
 
