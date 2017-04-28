@@ -211,19 +211,21 @@ def main(argv):
         return 1
     uri, road_table_name, search_radius, max_route_distance = params
 
-    sequence = [map(float, line.strip().split()) for line in sys.stdin if line.strip()]
+    sequence = [list(map(float, line.strip().split())) for line in sys.stdin if line.strip()]
 
     conn = psycopg2.connect(uri)
     candidates = map_match(conn, road_table_name, sequence, search_radius, max_route_distance)
     conn.close()
 
+    print("ID,Lat,Lon,LatMatch,LonMatch,EdgeIdMatch,Location,Distance")
     for candidate in candidates:
-        print('         Measurement ID: {0}'.format(candidate.measurement.id))
-        print('             Coordinate: {0:.6f} {1:.6f}'.format(*map(float, (candidate.measurement.lon, candidate.measurement.lat))))
-        print('    Matche d coordinate: {0:.6f} {1:.6f}'.format(*map(float, (candidate.lon, candidate.lat))))
-        print('        Matched edge ID: {0}'.format(candidate.edge.id))
-        print('Location along the edge: {0:.2f}'.format(candidate.location))
-        print('               Distance: {0:.2f} meters'.format(candidate.distance))
+        print(candidate.measurement.id,candidate.measurement.lon, candidate.measurement.lat,candidate.lon, candidate.lat,candidate.edge.id,candidate.location,candidate.distance,sep=",")
+        #print('         Measurement ID: {0}'.format(candidate.measurement.id))
+        #print('             Coordinate: {0:.6f} {1:.6f}'.format(*map(float, (candidate.measurement.lon, candidate.measurement.lat))))
+        #print('    Matche d coordinate: {0:.6f} {1:.6f}'.format(*map(float, (candidate.lon, candidate.lat))))
+        #print('        Matched edge ID: {0}'.format(candidate.edge.id))
+        #print('Location along the edge: {0:.2f}'.format(candidate.location))
+        #print('               Distance: {0:.2f} meters'.format(candidate.distance))
 
     return 0
 

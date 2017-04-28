@@ -77,7 +77,7 @@ class IndexedIterator(list):
         self.buffer = []
         super(IndexedIterator, self).__init__()
 
-    def next(self):
+    def __next__(self):
         if self.buffer:
             item = self.buffer.pop()
         else:
@@ -95,7 +95,7 @@ class IndexedIterator(list):
 
 
 def test_indexed_iterator():
-    it = IndexedIterator(range(10))
+    it = IndexedIterator(list(range(10)))
     # It should work as an iterator
     assert next(it) == 0
     assert 0 in it
@@ -204,7 +204,7 @@ class ViterbiSearch(object):
             # queue, since it is impossible for them to reach current
             # state with lower costs
             if not state:
-                pqueue = list(filter(lambda c: c[1].timestamp > timestamp, pqueue))
+                pqueue = list([c for c in pqueue if c[1].timestamp > timestamp])
                 heapq.heapify(pqueue)
 
             # Next state is not always the latest
@@ -331,7 +331,7 @@ class NaiveViterbiSearch(ViterbiSearch):
 
             # Avoid underflow: multiplying all probability values by
             # an estimated scalar
-            least_prob, _, _ = min(filter(lambda c: c[0] > 0, belief_state), key=lambda c: c[0])
+            least_prob, _, _ = min([c for c in belief_state if c[0] > 0], key=lambda c: c[0])
             scalar = 1
             prob = least_prob
             while prob < 1:

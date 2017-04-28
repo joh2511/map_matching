@@ -114,7 +114,7 @@ def query_undirected_edges(cur, node):
     # TODO: Two queries not so good
     outgoing_edges = query_outgoing_edges(cur, node)
     incoming_edges = query_incoming_edges(cur, node)
-    edges = outgoing_edges + map(Edge.reversed_edge, incoming_edges)
+    edges = outgoing_edges + list(map(Edge.reversed_edge, incoming_edges))
     for edge in edges:
         assert node == edge.start_node, \
             'edge must start with node {0}'.format(node)

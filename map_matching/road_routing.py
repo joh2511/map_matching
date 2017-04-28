@@ -225,7 +225,7 @@ def build_adhoc_network(edge_locations):
             indexes.append(idx)
         adhoc_node_edges = split_edge(first_edge, locations)
 
-        idx_adhoc_node_edges += zip(indexes, adhoc_node_edges)
+        idx_adhoc_node_edges += list(zip(indexes, adhoc_node_edges))
 
     # Drop indexes and edges
     adhoc_nodes = [n for _, (n, _, _) in sorted(idx_adhoc_node_edges)]
