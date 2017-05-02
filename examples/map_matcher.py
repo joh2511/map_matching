@@ -217,7 +217,7 @@ def main(argv):
     candidates = map_match(conn, road_table_name, sequence, search_radius, max_route_distance)
     conn.close()
 
-    print("ID,Lat,Lon,LatMatch,LonMatch,EdgeIdMatch,Location,Distance")
+    print("ID,Lon,Lat,LonMatch,LatMatch,EdgeIdMatch,Location,Distance")
     for candidate in candidates:
         print(candidate.measurement.id,candidate.measurement.lon, candidate.measurement.lat,candidate.lon, candidate.lat,candidate.edge.id,candidate.location,candidate.distance,sep=",")
         #print('         Measurement ID: {0}'.format(candidate.measurement.id))

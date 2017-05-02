@@ -69,32 +69,3 @@ def test_edge():
 
 
 Measurement = collections.namedtuple('Measurement', ['id', 'lat', 'lon'])
-
-
-class DynamicDict(dict):
-    """
-    A dict subclass that can dynamically load and cache the values of
-    a key when the key is not found for the first time.
-
-    It's like `collections.defaultdict`, except that the factory
-    function accepts key as argument.
-    """
-    def __init__(self, factory):
-        self.factory = factory
-
-    def __missing__(self, key):
-        values = self.factory(key)
-        self[key] = values
-        return values
-
-
-def test_dynamic_dict():
-    double = lambda n: n + n
-    ddict = DynamicDict(double)
-    # It should not miss existing ones
-    ddict.update({1: 'hello', 2: 'world'})
-    assert ddict[1] == 'hello' and ddict[2] == 'world'
-    # It should load 3
-    assert ddict[3] == 6
-    # It should cache 3
-    assert 3 in ddict
